@@ -23,7 +23,6 @@ cloudDict ={}
 texts = []
 wordClouds = []
 
-BBC_FEED = "http://feeds.bbci.co.uk/news/world/rss.xml"
 LIMIT = 10
 
 def get_wordcloud(text,url):
@@ -89,17 +88,6 @@ def home():
     print("Elapsed Time: %s" % (time.time() - start))
 
     return render_template('home.html', clouds=cloudListInThreadOrder, categoryList=categoryListInThreadOrder, categoryTitleList=categoryTitleListInThreadOrder)
-
-@app.route('/breakingNews.html')
-def getBreakingNews():
-    feed = feedparser.parse(BBC_FEED)
-    clouds = []
-
-    for article in feed['entries'][:LIMIT]:
-        text = parse_article(article['link'])
-        cloud = get_wordcloud(text)
-        clouds.append(cloud)
-    return render_template('breakingNews.html', breakingNews=clouds)
 
 
 if __name__ == '__main__':
